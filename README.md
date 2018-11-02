@@ -1,2 +1,3 @@
 # graphQLKS
-Project using neo4j, GraphQL, apollo, and react
+
+Project using Grandstack, and NorthWind data base
