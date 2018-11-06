@@ -24,46 +24,6 @@ This will serve the app on `http://localhost:3000`
 
 ## Configure
 
-Configuration is done with environment variables specified in `.env`
-
-Edit `.env` to specify the URI of the GraphQL API. The default is `http://localhost:4000`
-
-*.env*
-
-```
-REACT_APP_GRAPHQL_URI=http://localhost:4000
-```
-
-## Build and Deploy (with Zeit Now)
-
-Be sure you've [deployed the GraphQL Service](../api#deployment) and have the URI of the GraphQL service you've deployed.
-
-### Configure 
-
-Create `.env.production` to override `.env` used for local development. For example if you've already deployed the GraphQL service, specify the GraphQL service URI in `.env.production`. 
-
-To take advantage of Zeit Now's free hosting tier you'll need to disable source maps (becuase the source map file size exceeds the maximum 1M for Now's free tier). Add `GENERATE_SOURCEMAP=false` to `.env.production`.
-
-So your `.env.production` should look like this (replacing your own GraphQL API URI):
-
-*.env.production*
-
-```
-REACT_APP_GRAPHQL_URI=https://grand-stack-starter-api-pqdeodpvok.now.sh
-GENERATE_SOURCEMAP=false
-```
-
-### Deploy With Zeit Now
-
-To use [Zeit Now](https://zeit.co/now) you'll need to download Zeit Desktop if you haven't already. And then run:
-
-```
-now
-```
-
-this will deploy your React app to Zeit Now and give you a unqiue URL for your app. For example: https://grand-stack-starter-ui-pwntmhvvwr.now.sh
-
-
 ## Material-UI
 
 [Material-UI](https://material-ui.com/) components are included. See [the docs](https://material-ui.com/getting-started/usage/) for an overview of the components included. This starter example makes use of the Material-UI data Table (and related) components.
