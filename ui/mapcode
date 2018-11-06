@@ -1,0 +1,124 @@
+MATCH  (emp:Employee)-[:SOLD]-> (o2:Order)- [:PRODUCT] -> (other:Product) with emp.firstName as emp,o2.shipName,other.companyName as shp,count(o2) as c WHERE 4 < c < 6 RETURN emp,shp,c
+
+
+
+
+match (a:Person)-[r]-(b:person)
+with a,b,count(r) as cnt
+where cnt > 5 and cnt < 10
+return
+
+type Query {
+  usersBySubstring(substring: String, first: Int = 10, offset: Int = 0): [Employee]
+    @cypher(
+      statement: "MATCH (u:Employee) WHERE u.first CONTAINS $substring RETURN u"
+    )
+}
+
+
+type Query {
+  usersBySubstring(substring: String, first: Int = 10, offset: Int = 0): [User]
+    @cypher(
+      statement: "MATCH (u:User) WHERE u.name CONTAINS $substring RETURN u"
+    )
+}
+
+
+type catalogo {
+  employes: [Employee] @relation(name: "SOLD", direction: "IN")
+  products: [Product] @relation(name: "PRODUCT", direction: "OUT")
+  orders: [Order] @relation(name: "PRODUCT", direction: "IN")
+  catalogo: [String]
+    @cypher(
+      statement: "MATCH  (emp:Employee)-[:SOLD]-> (o2:Order)- [:PRODUCT] -> (other:Product) RETURN  emp.firstName,o2.shipName,toFloat(avg(other.unitPrice))"
+    )
+}
+catalogo : @cypher ("MATCH (this)-[:SOLD]->(r:Order) RETURN DISTINCT(this.firstName), r.shipName,COUNT(r))"
+
+data = [
+      {
+        "firstName": "Nancy",
+        "numProducts": 123
+      },
+      {
+        "firstName": "Andrew",
+        "numProducts": 96
+      },
+      {
+        "firstName": "Janet",
+        "numProducts": 127
+      },
+      {
+        "firstName": "Margaret",
+        "numProducts": 156
+      },
+      {
+        "firstName": "Steven",
+        "numProducts": 42
+      },
+      {
+        "firstName": "Michael",
+        "numProducts": 67
+      },
+      {
+        "firstName": "Robert",
+        "numProducts": 72
+      },
+      {
+        "firstName": "Laura",
+        "numProducts": 104
+      },
+      {
+        "firstName": "Anne",
+        "numProducts": 43
+      }
+    ]
+
+
+const chartData = data.map(n => {
+  return (
+        label : n.firstName
+    );
+})
+
+data.map(n => {
+  return (
+        n.numProducts
+    );
+})
+
+const chartData = data.map( n => {
+    return (
+    {label: n.firstName,
+    value: n.numProducts}
+    );
+  })
+
+const update_data = data.map( n => {
+      return (
+              {label: n.firstName,
+              value: n.numProducts}
+              );
+      })
+
+
+  const update_data = data.Employee.map( n => {
+            return (
+                    {label: n.firstName,
+                    value: n.numProducts
+                    }
+                    );
+            })
+
+  chartConfigs.dataSource.data = update_data
+
+
+
+  <TableRow>
+    <TableCell>
+      {this.actualiza(data.Employee)}
+      {this.actualiza1(data.Employee)}
+      <ReactFusioncharts {...chartConfigs} />
+      <ReactFusioncharts {...chartConfigs1} />
+    </TableCell>
+  </TableRow>
