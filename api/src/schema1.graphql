@@ -1,0 +1,101 @@
+type Employee {
+  firstName: String
+  employeeID: String
+  lastName: String
+  title: String
+  orders: [Order] @relation(name: "SOLD", direction: "OUT")
+  numProducts: Int
+    @cypher(statement: "MATCH (this)-[:SOLD]->(r:Order) RETURN COUNT(r)")
+  avgPrice: Float
+    @cypher(
+      statement: "MATCH  (this)-[:SOLD]-> (o2)- [:PRODUCT] -> (other:Product) RETURN  toFloat(avg(other.unitPrice))"
+    )
+}
+
+type Order {
+  orderID: String
+  shipName: String
+  employes: [Employee] @relation(name: "SOLD", direction: "IN")
+  products: [Product] @relation(name: "PRODUCT", direction: "OUT")
+}
+
+type Product {
+  productId: String
+  productName: String
+  unitPrice: Float
+  orders: [Order] @relation(name: "PRODUCT", direction: "IN")
+}
+
+type User {
+  id: ID!
+  name: String
+  friends: [User] @relation(name: "FRIENDS", direction: "BOTH")
+  reviews: [Review] @relation(name: "WROTE", direction: "OUT")
+  avgStars: Float
+    @cypher(
+      statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN toFloat(avg(r.stars))"
+    )
+  numReviews: Int
+    @cypher(statement: "MATCH (this)-[:WROTE]->(r:Review) RETURN COUNT(r)")
+}
+
+type Business {
+  id: ID!
+  name: String
+  address: String
+  city: String
+  state: String
+  reviews: [Review] @relation(name: "REVIEWS", direction: "IN")
+  categories: [Category] @relation(name: "IN_CATEGORY", direction: "OUT")
+}
+
+type Review {
+  id: ID!
+  stars: Int
+  text: String
+  business: Business @relation(name: "REVIEWS", direction: "OUT")
+  user: User @relation(name: "WROTE", direction: "IN")
+}
+
+type Category {
+  name: ID!
+  businesses: [Business] @relation(name: "IN_CATEGORY", direction: "IN")
+}
+
+type Query {
+  usersBySubstring(
+    substring: String
+    first: Int = 10
+    offset: Int = 0
+  ): [Employee]
+    @cypher(
+      statement: "MATCH (u:Employee) WHERE u.firstName CONTAINS $substring RETURN u"
+    )
+}
+
+type Mutation {
+  RemoveEmployeeOrders(
+    employeefirstName: String!
+    orderorderID: String!
+  ): [Employee]
+    @cypher(
+      statement: "MATCH (n:Person { name: '$employeefirstName' }) DELETE n"
+    )
+}
+
+type Mutation {
+  DeleteEmployee(firstName: String!): [Employee]
+    @cypher(statement: "MATCH (n:Person { name: '$firstName' }) DELETE n")
+}
+
+type Mutation {
+  UpdateEmployee(
+    firstName: String!
+    employeeID: String
+    lastName: String
+    title: String
+  ): [Employee]
+    @cypher(
+      statement: "MATCH (n:Person { name: '$employeefirstName' }) DELETE n"
+    )
+}
