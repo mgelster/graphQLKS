@@ -20,7 +20,7 @@ npm start
 
 This will serve the app on `http://localhost:3000`
 
-![](img/default-app.png)
+![](img/output1.png)
 
 ## Configure
 
