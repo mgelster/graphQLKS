@@ -1,4 +1,4 @@
-# GRANDstack Starter - GraphQL API
+# GRAPHKS Starter - GraphQL API
 
 
 ## Quick Start
