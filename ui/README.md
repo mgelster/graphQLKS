@@ -1,4 +1,4 @@
-# GRANDstack Starter - UI
+# GRAPHKS Starter - UI
 
 This directory contains a React app (bootstrapped with Create React App) that uses Apollo Client to query a GraphQL API.
 
