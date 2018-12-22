@@ -15,10 +15,10 @@ const schema = makeExecutableSchema({
 const augmentedSchema = augmentSchema(schema);
 
 const driver = neo4j.driver(
-  process.env.NEO4J_URI || "bolt://localhost:7687",
+  process.env.NEO4J_URI || "bolt://54.193.120.51:7687",
   neo4j.auth.basic(
     process.env.NEO4J_USER || "neo4j",
-    process.env.NEO4J_PASSWORD || "letmein"
+    process.env.NEO4J_PASSWORD || "ailab2018"
   )
 );
 
