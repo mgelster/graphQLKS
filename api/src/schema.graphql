@@ -64,11 +64,12 @@ type Category {
 
 type Query {
   usersBySubstring(
-    substring: String
+    param1: String
+    param2: String
     first: Int = 10
     offset: Int = 0
-  ): [Employee]
+  ): [Product]
     @cypher(
-      statement: "MATCH (u:Employee) WHERE u.firstName CONTAINS $substring RETURN u"
+      statement: "MATCH (u:Product) WHERE u.productName CONTAINS $param1 OR  u.productName CONTAINS $param2 RETURN u"
     )
 }
